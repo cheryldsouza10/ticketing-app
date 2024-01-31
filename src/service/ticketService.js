@@ -32,17 +32,18 @@ module.exports = fp((fastify, options, next) => {
 
   const getTicketListService = async (status) => {
     const busCapacity = new Array(BUS_CAPACITY).fill(0).map((e,i)=>i+1);
-    const data = await fastify.ticketRepository.getTicketListByStatus(status.trim().toLowerCase());
+    const data = await fastify.ticketRepository.getTicketListByStatus();
+    const ticketList = data.map((val)=>val.ticket_no)
 
     if (status === TICKET_STATUS.CLOSE) {
       return {
         ticketStatus: TICKET_STATUS.CLOSE,
-        tickets: data.map((val)=>val.ticket_no)
+        tickets: ticketList
       }
     } else {
       return {
         ticketStatus: TICKET_STATUS.OPEN,
-        tickets: busCapacity.filter((x) => data.indexOf(x) === -1)
+        tickets: busCapacity.filter((x) => ticketList.indexOf(x) === -1)
       }
     }
 

@@ -40,8 +40,8 @@ module.exports = fp((fastify, options, next) => {
     }
   }
 
-  const getTicketListByStatus = async (status) => {
-    const sql = SQL`SELECT ticket_no FROM ticket_details WHERE status=${status}`
+  const getTicketListByStatus = async () => {
+    const sql = SQL`SELECT ticket_no FROM ticket_details WHERE status='close'`
     try {
       const result = await fastify.pg.query(sql);
       return result.rows && result.rows;
