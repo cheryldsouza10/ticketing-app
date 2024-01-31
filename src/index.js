@@ -7,6 +7,9 @@ const app = fastify()
 const db = require('./dbConnector.js');
 app.register(db)
 
+const host = ("RENDER" in process.env) ? `0.0.0.0` : `localhost`;
+const port = process.env.PORT || 3000;
+
 app.register(autoload, {
   dir: path.join(__dirname, "repository"),
   ignorePattern: /^(__tests__)/,
@@ -22,6 +25,9 @@ app.register(autoload, {
   ignorePattern: /^(schema)/,
 })
 
-app.listen({ port: process.env.PORT || 3000 }, 
-  () => console.log("Server is running on port 3000")
-)
+app.listen({host: host, port: port }, function (err, address) {
+  if (err) {
+    fastify.log.error(err)
+    process.exit(1)
+  }
+})
