@@ -12,7 +12,8 @@ module.exports = fp((fastify, options, next) => {
         }
       } else {
         return {
-          message: `Admin ID ${adminId} is not registered for bus no. ${busNo}. Please contact service team.`
+          message: `Admin ID ${adminId} is not registered for bus no. ${busNo}. Please contact service team.`,
+          details: "For bus 1 registerered admins have IDs admin-1, admin-2"
         }
       }
     } else {
