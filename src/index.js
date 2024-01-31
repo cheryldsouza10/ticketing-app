@@ -1,6 +1,7 @@
 const fastify = require('fastify')
 const autoload = require('@fastify/autoload')
 const path = require("path");
+require("dotenv").config();
 
 const app = fastify()
 const db = require('./dbConnector.js');
@@ -21,4 +22,6 @@ app.register(autoload, {
   ignorePattern: /^(schema)/,
 })
 
-app.listen({ port: 8000 })
+app.listen({ port: process.env.PORT || 3000 }, 
+  () => console.log("Server is running on port 3000")
+)
